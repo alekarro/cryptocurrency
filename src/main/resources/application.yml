@@ -1,0 +1,21 @@
+api:
+  coinmarketcap:
+    uri: https://pro-api.coinmarketcap.com/v1/cryptocurrency
+    apiKey: 373b3c2c-7077-455f-9bd7-44375ad21e14
+    timer:
+      totalFireCount: 5
+      runForever: false
+      repeatIntervalMs: 120000
+      initialOffsetMs: 0
+    request:
+      v1:
+        cryptocurrency:
+          listings:
+            latest:
+              start: 1
+              limit: 10
+              convert: USD
+              sort: market_cap
+feign:
+  okhttp:
+    enabled: true
