@@ -4,9 +4,9 @@ plugins {
 	id 'java'
 }
 
-group = 'com.crealogix'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+group = 'com.aro'
+version = '1.0'
+sourceCompatibility = '8'
 
 repositories {
 	mavenCentral()
@@ -21,7 +21,6 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-quartz'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-	implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 	implementation 'org.springframework.boot:spring-boot-starter-json'
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
 
@@ -39,3 +38,14 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+jar {
+	manifest {
+		attributes(
+				"Implementation-Title": "Crypto currencies",
+				'Main-Class': 'com.aro.cryptocurrency.CryptocurrenciesApplication'
+		)
+	}
+	archiveClassifier = '' //removes word 'plain' from jar name
+}
+
