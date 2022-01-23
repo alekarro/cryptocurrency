@@ -22,7 +22,7 @@ public class ApiClientConfiguration {
             Decoder decoder,
             Contract apiFeignContract,
             RequestInterceptor apiKeyCryptoCurrencyRequestInterceptor,
-            @Value("${api.coinmarketcap.uri}")String uri) {
+            @Value("${api.coinmarketcap.uri}") String uri) {
 
         return Feign.builder()
                 .encoder(encoder)
@@ -42,5 +42,4 @@ public class ApiClientConfiguration {
     public Contract apiFeignContract() {
         return new feign.Contract.Default();
     }
-
 }

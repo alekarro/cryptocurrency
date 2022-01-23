@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.aro'
 version = '1.0'
-sourceCompatibility = '8'
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
@@ -38,14 +38,3 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
-
-jar {
-	manifest {
-		attributes(
-				"Implementation-Title": "Crypto currencies",
-				'Main-Class': 'com.aro.cryptocurrency.CryptocurrenciesApplication'
-		)
-	}
-	archiveClassifier = '' //removes word 'plain' from jar name
-}
-

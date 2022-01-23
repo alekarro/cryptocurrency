@@ -7,7 +7,7 @@ import feign.QueryMap;
 import feign.RequestLine;
 
 @Headers({
-    "Accept: application/json"
+        "Accept: application/json"
 })
 public interface CryptoCurrencyServiceFeignClient {
 

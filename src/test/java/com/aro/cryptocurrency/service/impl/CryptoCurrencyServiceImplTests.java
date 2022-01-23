@@ -1,24 +1,23 @@
 package com.aro.cryptocurrency.service.impl;
 
-import com.aro.cryptocurrency.JsonUtils;
 import com.aro.cryptocurrency.apiclient.CryptoCurrencyServiceFeignClient;
 import com.aro.cryptocurrency.jobs.OutputCryptoCurrenciesJob;
 import com.aro.cryptocurrency.model.CryptoCurrencyRequest;
 import com.aro.cryptocurrency.model.CryptoCurrencyResponse;
 import com.aro.cryptocurrency.model.TimerInfo;
 import com.aro.cryptocurrency.service.SchedulerService;
+import com.aro.cryptocurrency.utils.JsonUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 
 import static com.aro.cryptocurrency.TestUtils.createParameters;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,10 +37,7 @@ public class CryptoCurrencyServiceImplTests {
 
     @BeforeEach
     public void before() {
-        service = new CryptoCurrencyServiceImpl();
-        ReflectionTestUtils.setField(service, "cryptoCurrencyServiceFeignClient", cryptoCurrencyServiceFeignClient);
-        ReflectionTestUtils.setField(service, "schedulerService", schedulerService);
-        ReflectionTestUtils.setField(service, "cryptoCurrencyTimerInfo", cryptoCurrencyTimerInfo);
+        service = new CryptoCurrencyServiceImpl(schedulerService, cryptoCurrencyServiceFeignClient, cryptoCurrencyTimerInfo);
     }
 
     @Test
@@ -56,14 +52,12 @@ public class CryptoCurrencyServiceImplTests {
 
     @Test
     public void outputCryptoCurrencies_exception() {
-        final Exception exception = assertThrows(NullPointerException.class, () -> {
-            service.outputCryptoCurrencies(null);
-        });
-        assertEquals(null, exception.getMessage());
+        final Exception exception = assertThrows(NullPointerException.class, () -> service.outputCryptoCurrencies(null));
+        assertNull(exception.getMessage());
     }
 
     @Test
-    public void outputCryptoCurrenciesScheduled_successful() {
+    public void outputCryptoCurrenciesScheduled_successful() throws JsonProcessingException {
         final CryptoCurrencyRequest parameters = createParameters(1,5,"USD","price");
         service.outputCryptoCurrenciesScheduled(parameters);
         verify(schedulerService, times(1)).schedule(OutputCryptoCurrenciesJob.class, cryptoCurrencyTimerInfo, JsonUtils.toJson(parameters));

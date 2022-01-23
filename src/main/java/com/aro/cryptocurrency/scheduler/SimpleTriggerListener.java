@@ -1,19 +1,17 @@
 package com.aro.cryptocurrency.scheduler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.TriggerListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-public class SimpleTriggerListener implements TriggerListener  {
+@Slf4j
+public class SimpleTriggerListener implements TriggerListener {
     private AtomicInteger numberOfFirings = new AtomicInteger();
-
-    private static final Logger LOG = LoggerFactory.getLogger(SimpleTriggerListener.class);
 
     @Override
     public String getName() {
@@ -22,7 +20,7 @@ public class SimpleTriggerListener implements TriggerListener  {
 
     @Override
     public void triggerFired(Trigger trigger, JobExecutionContext context) {
-        LOG.info("Trigger fired - " + context.getJobDetail().getKey());
+        log.info("Trigger fired - " + context.getJobDetail().getKey());
     }
 
     @Override
@@ -32,13 +30,13 @@ public class SimpleTriggerListener implements TriggerListener  {
 
     @Override
     public void triggerMisfired(Trigger trigger) {
-        LOG.info("Trigger misfired - " + trigger.getJobKey());
+        log.info("Trigger misfired - " + trigger.getJobKey());
         numberOfFirings.incrementAndGet();
     }
 
     @Override
     public void triggerComplete(Trigger trigger, JobExecutionContext context, Trigger.CompletedExecutionInstruction triggerInstructionCode) {
-        LOG.info("Trigger completed - " + context.getJobDetail().getKey());
+        log.info("Trigger completed - " + context.getJobDetail().getKey());
         numberOfFirings.incrementAndGet();
     }
 

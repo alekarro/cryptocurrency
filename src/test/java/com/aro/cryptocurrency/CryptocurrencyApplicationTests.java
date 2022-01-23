@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootTest
 @PropertySource("classpath:test.properties")
-class CryptocurrenciesApplicationTests {
+class CryptocurrencyApplicationTests {
 
 	@Test
 	public void runApp() {

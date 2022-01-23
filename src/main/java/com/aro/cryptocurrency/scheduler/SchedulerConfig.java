@@ -3,7 +3,6 @@ package com.aro.cryptocurrency.scheduler;
 import com.aro.cryptocurrency.model.TimerInfo;
 import org.quartz.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

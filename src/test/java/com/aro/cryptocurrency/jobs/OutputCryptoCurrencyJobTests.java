@@ -10,14 +10,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class OutputCryptoCurrenciesJobTests {
+public class OutputCryptoCurrencyJobTests {
     private OutputCryptoCurrenciesJob job;
 
     @Mock
@@ -34,8 +33,7 @@ public class OutputCryptoCurrenciesJobTests {
 
     @BeforeEach
     public void before() {
-        job = new OutputCryptoCurrenciesJob();
-        ReflectionTestUtils.setField(job, "cryptoCurrencyService", cryptoCurrencyService);
+        job = new OutputCryptoCurrenciesJob(cryptoCurrencyService);
     }
 
     @Test
@@ -52,9 +50,7 @@ public class OutputCryptoCurrenciesJobTests {
         when(context.getJobDetail()).thenReturn(jobDetail);
         when(jobDetail.getJobDataMap()).thenReturn(jobDataMap);
         when(jobDataMap.get("OutputCryptoCurrenciesJob")).thenReturn(null);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            job.execute(context);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> job.execute(context));
         assertEquals("argument \"content\" is null", exception.getMessage());
         verify(cryptoCurrencyService, times(0)).outputCryptoCurrencies(any(CryptoCurrencyRequest.class));
     }

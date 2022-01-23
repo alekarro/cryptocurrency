@@ -12,7 +12,7 @@ public class CryptoCurrencyData {
     private String name;
     private String symbol;
     @JsonProperty("quote")
-    private Map<String,CryptoCurrencyQuote> quotes;
+    private Map<String, CryptoCurrencyQuote> quotes;
 
 
     @Override
@@ -22,11 +22,10 @@ public class CryptoCurrencyData {
         sb.append("\tSymbol: ").append(symbol).append("\n");
         sb.append("\tQuotes:\n");
         if (quotes != null) {
-            quotes.entrySet().forEach(entry -> {
-                sb.append("\t\tCurrency: ").append(entry.getKey()).append(":\n");
-                sb.append(entry.getValue());
-                }
-            );
+            quotes.forEach((key, value) -> {
+                sb.append("\t\tCurrency: ").append(key).append(":\n");
+                sb.append(value);
+            });
         }
         return sb.toString();
     }

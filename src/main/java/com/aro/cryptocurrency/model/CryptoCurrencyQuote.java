@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 public class CryptoCurrencyQuote {
-    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal price;
 
     @JsonProperty("volume_24h")
-    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal volume24h;
 
     @JsonProperty("market_cap")
-    @JsonFormat(shape=JsonFormat.Shape.STRING)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal marketCap;
 
     @Override

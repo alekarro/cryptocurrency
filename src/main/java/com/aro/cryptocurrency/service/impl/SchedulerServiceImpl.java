@@ -3,10 +3,9 @@ package com.aro.cryptocurrency.service.impl;
 import com.aro.cryptocurrency.model.TimerInfo;
 import com.aro.cryptocurrency.scheduler.SimpleTriggerListener;
 import com.aro.cryptocurrency.service.SchedulerService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,18 +15,16 @@ import static com.aro.cryptocurrency.scheduler.SchedulerConfig.buildJobDetail;
 import static com.aro.cryptocurrency.scheduler.SchedulerConfig.buildTrigger;
 
 @Service
+@Slf4j
+@AllArgsConstructor
 public class SchedulerServiceImpl implements SchedulerService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SchedulerServiceImpl.class);
-
-    @Autowired
     private Scheduler scheduler;
 
-    @Autowired
     private SimpleTriggerListener simpleTriggerListener;
 
     public <T extends Job> void schedule(final Class<T> jobClass, final TimerInfo timerInfo,
-            final String jsonData) {
+                                         final String jsonData) {
 
         final JobDetail jobDetail = buildJobDetail(jobClass, jsonData);
         final Trigger trigger = buildTrigger(jobClass, timerInfo);
@@ -35,7 +32,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -45,7 +42,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             scheduler.start();
             scheduler.getListenerManager().addTriggerListener(simpleTriggerListener);
         } catch (SchedulerException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -54,7 +51,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.shutdown();
         } catch (SchedulerException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 }

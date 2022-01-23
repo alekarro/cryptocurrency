@@ -1,14 +1,12 @@
 package com.aro.cryptocurrency.scheduler;
 
-import com.aro.cryptocurrency.model.TimerInfo;
 import org.junit.jupiter.api.Test;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 
 import static com.aro.cryptocurrency.TestUtils.createTimerInfo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SchedulerConfigTests {
 
@@ -29,7 +27,7 @@ public class SchedulerConfigTests {
     @Test
     public void buildJobDetail_successNull(){
         final JobDetail jobDetail = SchedulerConfig.buildJobDetail(Job.class, null);
-        assertEquals(null, jobDetail.getJobDataMap().get("Job"));
+        assertNull(jobDetail.getJobDataMap().get("Job"));
         assertEquals("Job", jobDetail.getKey().getName());
     }
 
@@ -44,14 +42,13 @@ public class SchedulerConfigTests {
         final Exception exception = assertThrows(NullPointerException.class, () -> {
             final Trigger trigger = SchedulerConfig.buildTrigger(Job.class, null);
         });
-        assertEquals(null, exception.getMessage());
+        assertNull(exception.getMessage());
     }
 
     @Test
     public void buildTrigger_negativeValues(){
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            SchedulerConfig.buildTrigger(Job.class, createTimerInfo(-1,true,-2,-3));
-        });
+        final Exception exception = assertThrows(IllegalArgumentException.class, () ->
+                SchedulerConfig.buildTrigger(Job.class, createTimerInfo(-1,true,-2,-3)));
         assertEquals("Repeat interval must be >= 0", exception.getMessage());
     }
 
