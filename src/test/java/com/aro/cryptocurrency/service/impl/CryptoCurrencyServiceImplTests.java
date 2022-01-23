@@ -51,9 +51,9 @@ public class CryptoCurrencyServiceImplTests {
     }
 
     @Test
-    public void outputCryptoCurrencies_exception() {
-        final Exception exception = assertThrows(NullPointerException.class, () -> service.outputCryptoCurrencies(null));
-        assertNull(exception.getMessage());
+    public void outputCryptoCurrencies_null() {
+        service.outputCryptoCurrencies(null);
+        verify(cryptoCurrencyServiceFeignClient, times(1)).getCryptoCurrencies(null);
     }
 
     @Test

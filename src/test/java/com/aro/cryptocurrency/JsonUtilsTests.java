@@ -4,6 +4,7 @@ import com.aro.cryptocurrency.model.CryptoCurrencyRequest;
 import com.aro.cryptocurrency.model.TimerInfo;
 import com.aro.cryptocurrency.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.jupiter.api.Test;
 
 import static com.aro.cryptocurrency.TestUtils.createParameters;
@@ -35,7 +36,9 @@ public class JsonUtilsTests {
     }
 
     @Test
-    public void toObject_null() throws JsonProcessingException {
-        assertNull(JsonUtils.toObject("{\"start\":1,\"limit\":\"8\",\"convert\":\"ABC\",\"sort\":\"market_cap}", CryptoCurrencyRequest.class));
+    public void toObject_null() {
+        Exception exception = assertThrows(JsonMappingException.class, () ->
+                JsonUtils.toObject("{\"start\":1,\"limit\":\"8\",\"convert\":\"ABC\",\"sort\":\"market_cap}", CryptoCurrencyRequest.class));
+        assertTrue(exception.getMessage().startsWith("Unexpected end-of-input: was expecting closing quote for a string value"));
     }
 }
