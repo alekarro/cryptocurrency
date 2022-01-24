@@ -11,6 +11,7 @@ import com.aro.cryptocurrency.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,7 @@ public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
     private TimerInfo cryptoCurrencyTimerInfo;
 
     @Override
+    @Scheduled(cron = "0 0 0 0 1")
     public void outputCryptoCurrencies(CryptoCurrencyRequest parameters) {
         final CryptoCurrencyResponse response = cryptoCurrencyServiceFeignClient.getCryptoCurrencies(parameters);
         if (response != null) {

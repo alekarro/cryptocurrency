@@ -2,9 +2,9 @@ package com.aro.cryptocurrency.jobs;
 
 import com.aro.cryptocurrency.model.CryptoCurrencyRequest;
 import com.aro.cryptocurrency.service.CryptoCurrencyService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.quartz.JobDataMap;
@@ -17,6 +17,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class OutputCryptoCurrencyJobTests {
+
+    @InjectMocks
     private OutputCryptoCurrenciesJob job;
 
     @Mock
@@ -30,11 +32,6 @@ public class OutputCryptoCurrencyJobTests {
 
     @Mock
     private JobDataMap jobDataMap;
-
-    @BeforeEach
-    public void before() {
-        job = new OutputCryptoCurrenciesJob(cryptoCurrencyService);
-    }
 
     @Test
     public void execute_successful() {

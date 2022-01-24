@@ -24,7 +24,7 @@ public class CryptocurrencyApplication {
             final CryptoCurrencyService cryptoCurrencyService,
             final CryptoCurrencyRequest parameters,
             final TimerInfo cryptoCurrencyTimerInfo,
-            final SimpleTriggerListener SimpleTriggerListener,
+            final SimpleTriggerListener simpleTriggerListener,
             final ApplicationContext context
     ) {
         return args -> {
@@ -34,7 +34,7 @@ public class CryptocurrencyApplication {
                         (cryptoCurrencyTimerInfo.getInitialOffsetMs() / 1000) + 1;
                 TimeUnit.SECONDS.sleep(timeToSleep);
 
-                while (SimpleTriggerListener.getNumberOfFirings().get() < cryptoCurrencyTimerInfo.getTotalFireCount()) {
+                while (simpleTriggerListener.getNumberOfFirings().get() < cryptoCurrencyTimerInfo.getTotalFireCount()) {
                     TimeUnit.SECONDS.sleep(5);
                 }
 

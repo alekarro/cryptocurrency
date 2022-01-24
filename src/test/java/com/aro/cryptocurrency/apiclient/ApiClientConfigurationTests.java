@@ -4,9 +4,9 @@ import feign.Contract;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class ApiClientConfigurationTests {
 
+    @InjectMocks
     private ApiClientConfiguration apiClientConfiguration;
 
     @Mock
@@ -28,11 +29,6 @@ public class ApiClientConfigurationTests {
 
     @Mock
     private RequestInterceptor apiKeyCryptoCurrencyRequestInterceptor;
-
-    @BeforeEach
-    public void before() {
-        apiClientConfiguration = new ApiClientConfiguration();
-    }
 
     @Test
     public void cryptoCurrencyFeignClient_successful() {

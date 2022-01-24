@@ -2,19 +2,22 @@ package com.aro.cryptocurrency.service.impl;
 
 import com.aro.cryptocurrency.model.TimerInfo;
 import com.aro.cryptocurrency.scheduler.SimpleTriggerListener;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.quartz.*;
 
 import static com.aro.cryptocurrency.TestUtils.createTimerInfo;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SchedulerServiceImplTests {
+
+    @InjectMocks
     private SchedulerServiceImpl service;
 
     @Mock
@@ -22,11 +25,6 @@ public class SchedulerServiceImplTests {
 
     @Mock
     private SimpleTriggerListener simpleTriggerListener;
-
-    @BeforeEach
-    public void before() {
-        service = new SchedulerServiceImpl(scheduler, simpleTriggerListener);
-    }
 
     @Test
     public void schedule_successful() throws SchedulerException {

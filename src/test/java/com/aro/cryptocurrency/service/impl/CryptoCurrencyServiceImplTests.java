@@ -8,21 +8,21 @@ import com.aro.cryptocurrency.model.TimerInfo;
 import com.aro.cryptocurrency.service.SchedulerService;
 import com.aro.cryptocurrency.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
 import static com.aro.cryptocurrency.TestUtils.createParameters;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CryptoCurrencyServiceImplTests {
 
+    @InjectMocks
     private CryptoCurrencyServiceImpl service;
 
     @Mock
@@ -33,12 +33,6 @@ public class CryptoCurrencyServiceImplTests {
 
     @Mock
     private TimerInfo cryptoCurrencyTimerInfo;
-
-
-    @BeforeEach
-    public void before() {
-        service = new CryptoCurrencyServiceImpl(schedulerService, cryptoCurrencyServiceFeignClient, cryptoCurrencyTimerInfo);
-    }
 
     @Test
     public void outputCryptoCurrencies_successful() {
